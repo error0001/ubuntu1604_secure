@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Check update."
+sudo apt-get update
+echo "Install ufw."
+sudo apt-get install ufw
+echo "Check status ufw."
+sudo ufw status verbose
+echo "Basic: deny(incomig), allow(outgoing)"
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+echo "Ufw allow ssh and allow port 4000"
+sudo ufw allow ssh
+sudo ufw allow 4000
+echo "Run ufw."
+sudo ufw enable
+echo "Allow http(80) and https(443)."
+sudo ufw allow 80
+sudo ufw allow 443
+echo "Enable port 4001 for sfpt connect."
+sudo ufw allow 4001
+echo "Enable log of ufw"
+sudo ufw logging on
+echo "See log var.log.ufw.."
