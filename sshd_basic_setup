@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "Check update."
+sudo apt-get update
+echo "Install Open-SSH server in your Ubuntu."
+sudo apt install openssh-server
+echo "SSHD is active."
+sudo systemctl enable sshd
+echo "Copy main config"
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.factory-defaults
+echo "Excelent, we must edit sshd_config next:"
+echo "Edit a Port from default 22 to other"
+echo "Edit PermitRootLogin from Yes to No."
+echo "If you want to access authentification for a key, you must"
+echo "edit PubkeyAuthentication from no to yes."
+sudo nano /etc/ssh/sshd_config
+echo "Restart ssh"
+sudo systemctl restart ssh
+echo "After, you must enable editing port in your ufw."
+echo "Change ufw allow [nubmer_port]"
