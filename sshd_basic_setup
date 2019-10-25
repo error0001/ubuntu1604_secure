@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Extractions and Copy files
 echo "Check update."
 sudo apt-get update
 echo "Install Open-SSH server in your Ubuntu."
@@ -8,18 +9,14 @@ echo "SSHD is active."
 sudo systemctl enable sshd
 echo "Copy main config"
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.factory-defaults
-echo "Excelent, we must edit sshd_config next:"
-echo "1. Edit a Port from default 22 to other."
-echo "___As example use port 4000 from ufw_basic_setup"
-echo "2. Edit PermitRootLogin from Yes to No."
-echo "3. If you want to access authentification for a key, you must"
-echo "___edit PubkeyAuthentication from no to yes."
-echo "4. We may to allow necessary users and groups."
-echo "___Please edit lines with AllowUsers and AllowGroups."
-echo "___As example: AllowUsers User1 User2 and so forth"
-sudo nano /etc/ssh/sshd_config
+# Needed replacements
+sudo sed -i 's/Port 22/Port 4000/g' /etc/ssh/sshd_config
+sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+# Time of autorization
+sudo sed -i 's/LoginGraceTime 120/LoginGraceTime 60/g' /etc/ssh/sshd_config
+# Allows users
+sudo sed -i 's/AllowUsers /AllowUsers user0 sftpuser/g' /etc/ssh/sshd_config
 echo "Restart ssh"
 sudo systemctl restart ssh
-echo "After, you must enable editing port in your ufw."
-echo "Change ufw allow [nubmer_port]"
-echo "Script: sudo ufw allow [nubmer_port]"
+echo "Ufw allows port 4000 for ssh"
+sudo ufw allow 4000
