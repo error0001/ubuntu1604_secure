@@ -14,8 +14,6 @@ sudo ufw enable
 echo "Allow http(80) and https(443)."
 sudo ufw allow 80
 sudo ufw allow 443
-echo "Enable port 4001 for sfpt connect."
-sudo ufw allow 4001
 sudo ufw status verbose
 echo "Enable log of ufw"
 sudo ufw logging on
