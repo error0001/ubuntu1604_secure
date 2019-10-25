@@ -19,4 +19,5 @@ sudo sed -i 's/AllowUsers /AllowUsers user0 sftpuser/g' /etc/ssh/sshd_config
 echo "Restart ssh"
 sudo systemctl restart ssh
 echo "Ufw allows port 4000 for ssh"
+sudo ufw allow ssh
 sudo ufw allow 4000
